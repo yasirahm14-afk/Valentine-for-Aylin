@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valentine?</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #fff;
+    }
+    .card {
+      width: min(520px, 92vw);
+      border: 1px solid #eee;
+      border-radius: 18px;
+      padding: 28px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,.06);
+      position: relative;
+      overflow: hidden;
+      min-height: 260px;
+    }
+    h1 { margin: 0 0 12px; font-size: 28px; }
+    p { margin: 0 0 22px; opacity: .75; }
+    .btn {
+      padding: 14px 22px;
+      border-radius: 14px;
+      border: 0;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #yes {
+      background: #111;
+      color: #fff;
+      margin-right: 10px;
+    }
+    #no {
+      background: #f2f2f2;
+      color: #111;
+      position: absolute;
+      left: 60%;
+      top: 62%;
+      transform: translate(-50%, -50%);
+    }
+    #result {
+      margin-top: 18px;
+      font-size: 18px;
+      font-weight: 600;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card" id="card">
+    <h1>Aylin Will you be my Valentine? 🎀</h1>
+    <p>(Nur Spaß – aber sag bitte trotzdem ja 😭😂)</p>
+
+    <button class="btn" id="yes">Ja 💘</button>
+    <button class="btn" id="no">Nein 🙃</button>
+
+    <div id="result">Yesss! Dann gehört der Valentinstag dir & mir 😗🎀</div>
+  </div>
+
+  <script>
+    const no = document.getElementById('no');
+    const yes = document.getElementById('yes');
+    const card = document.getElementById('card');
+    const result = document.getElementById('result');
+
+    function moveNo() {
+      const rect = card.getBoundingClientRect();
+      const pad = 20;
+
+      // Buttongröße berücksichtigen
+      const bw = no.offsetWidth;
+      const bh = no.offsetHeight;
+
+      const maxX = rect.width - bw - pad;
+      const maxY = rect.height - bh - pad;
+
+      const x = Math.random() * maxX + pad;
+      const y = Math.random() * maxY + pad;
+
+      no.style.left = x + "px";
+      no.style.top = y + "px";
+      no.style.transform = "translate(0,0)";
+    }
+
+    // Auf Desktop: wenn Maus in die Nähe kommt
+    no.addEventListener('mouseenter', moveNo);
+
+    // Auf Handy: wenn man versucht zu tippen / berührt
+    no.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      moveNo();
+    }, { passive: false });
+
+    yes.addEventListener('click', () => {
+      result.style.display = "block";
+      yes.disabled = true;
+      no.disabled = true;
+      no.style.opacity = .4;
+    });
+  </script>
+</body>
+</html>
